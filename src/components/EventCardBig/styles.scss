@@ -1,0 +1,73 @@
+@use "../../variables.scss" as v;
+
+.event-card-big {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: v.$primary;
+
+  .event-details-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: calc(100% - 758px);
+    padding: 32px;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    color: v.$text-color;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+
+    .event-details {
+      .event-name {
+        margin: 0;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 40px;
+      }
+
+      .event-info {
+        margin: 16px 0;
+
+        .event-date {
+          margin-bottom: 8px;
+        }
+      }
+
+      p {
+        max-width: 576px;
+        margin: 0;
+      }
+    }
+
+    button {
+      width: 137px;
+      height: 40px;
+      border: 1px solid v.$text-color;
+      background-color: v.$primary;
+
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      color: v.$text-color;
+    }
+  }
+
+  img {
+    width: 758px;
+    height: 400px;
+    background: linear-gradient(
+      90deg,
+      #252b40 6.73%,
+      rgba(37, 43, 64, 0) 33.05%
+    );
+  }
+}

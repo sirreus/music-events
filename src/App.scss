@@ -1,5 +1,7 @@
+@use "./variables.scss" as v;
+
 .App {
-  background-color: #252b40;
+  background-color: v.$primary;
   max-width: 1440px;
   margin: 0 auto;
 }

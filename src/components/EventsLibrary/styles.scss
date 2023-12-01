@@ -1,0 +1,15 @@
+@use "../../variables.scss" as v;
+
+.events-library {
+  background-color: v.$background;
+  padding: 32px;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 332px 332px 332px 332px;
+  gap: 16px 16px;
+}
