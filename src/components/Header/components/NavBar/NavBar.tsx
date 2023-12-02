@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { selectFilter } from "../../../../store/filters/slices";
+import { IFilter } from "../../../../store/filters/types";
+import { RootState } from "../../../../store";
+
+import api from "../../../../api";
+
+import FiltersDropdown from "../FiltersDropdown";
+import { Filter } from "../Filter/Filter";
 
 import "./styles.scss";
-import api from "../../../../api";
-import FiltersDropdown from "../FiltersDropdown";
-import { Filter, IFilter } from "../Filter/Filter";
 
 export const NavBar: React.FC = () => {
-  const { data } = api.getMusicGenres();
+  const dispatch = useDispatch();
 
   const defaultFilters = [
     { name: "All genres", id: "all-genres", isActive: true },
   ];
 
+  const currentFilter: IFilter["name"] = useSelector(
+    (state: RootState) => state.filters.name
+  );
   const [filters, setFilters] = useState<IFilter[]>([...defaultFilters]);
-  const [currentFilter, setCurrentFilter] = useState<IFilter>(filters[0]);
   const [open, setOpen] = useState<boolean>(false);
+
+  const { data } = api.getMusicGenres();
 
   useEffect(() => {
     if (data && filters.length < 2) {
@@ -22,11 +33,7 @@ export const NavBar: React.FC = () => {
 
       const formatData = genresRawData.map(
         ({ id, name }: { id: string; name: string }) => {
-          return {
-            id,
-            name,
-            isActive: false,
-          };
+          return { id, name };
         }
       );
 
@@ -34,18 +41,22 @@ export const NavBar: React.FC = () => {
     }
   }, [data, filters]);
 
-  const selectFilter = (index: number) => {
+  const selectFilterHandler = (index: number) => {
     const selectedFilter = filters[index];
-    setCurrentFilter(selectedFilter);
+    dispatch(selectFilter(selectedFilter));
   };
+
+  const visibleFilters = filters.slice(0, 5);
+  const filtersOffset = visibleFilters.length + 1;
 
   return (
     <nav>
-      {filters.slice(0, 5).map((filter, index) => (
+      {visibleFilters.map((filter, index) => (
         <Filter
           filter={filter}
           index={index}
-          onSelect={selectFilter}
+          onSelect={selectFilterHandler}
+          currentFilter={currentFilter}
           key={index}
         />
       ))}
@@ -55,8 +66,10 @@ export const NavBar: React.FC = () => {
         </button>
         {open && (
           <FiltersDropdown
-            otherFilters={filters.slice(6) || []}
-            onSelect={selectFilter}
+            otherFilters={filters.slice(filtersOffset) || []}
+            onSelect={selectFilterHandler}
+            currentFilter={currentFilter}
+            filtersOffset={filtersOffset}
           />
         )}
       </div>

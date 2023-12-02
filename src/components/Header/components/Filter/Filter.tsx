@@ -1,16 +1,12 @@
 import React from "react";
 
 import "./styles.scss";
-
-export interface IFilter {
-  id: string;
-  name: string;
-  isActive: boolean;
-}
+import { IFilter } from "../../../../store/filters/types";
 
 interface FilterComponent {
   filter: IFilter;
   index: number;
+  currentFilter: string;
   onSelect: (index: number) => void;
 }
 
@@ -18,10 +14,13 @@ export const Filter: React.FC<FilterComponent> = ({
   filter,
   index,
   onSelect,
+  currentFilter,
 }) => {
   return (
     <div
-      className={filter.isActive ? "genres-filter active" : "genres-filter"}
+      className={
+        filter.name === currentFilter ? "genres-filter active" : "genres-filter"
+      }
       onClick={() => onSelect(index)}
       key={index}
     >

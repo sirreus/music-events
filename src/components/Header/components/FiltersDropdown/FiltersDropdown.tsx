@@ -1,16 +1,23 @@
 import React from "react";
-import { Filter, IFilter } from "../Filter/Filter";
+
+import { IFilter } from "../../../../store/filters/types";
+
+import { Filter } from "../Filter/Filter";
 
 import "./styles.scss";
 
 interface IFiltersDropdown {
   otherFilters: IFilter[];
   onSelect: (index: number) => void;
+  currentFilter: string;
+  filtersOffset: number;
 }
 
 export const FiltersDropdown: React.FC<IFiltersDropdown> = ({
   otherFilters,
   onSelect,
+  currentFilter,
+  filtersOffset,
 }) => {
   return (
     <div className="dropdown-wrapper">
@@ -18,9 +25,10 @@ export const FiltersDropdown: React.FC<IFiltersDropdown> = ({
         {otherFilters.map((filter, index) => (
           <Filter
             filter={filter}
-            index={index}
+            index={index + filtersOffset}
             onSelect={onSelect}
-            key={index}
+            currentFilter={currentFilter}
+            key={index + filtersOffset}
           />
         ))}
       </ul>

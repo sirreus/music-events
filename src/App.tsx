@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+
+import { IEvent, IRawImage } from "./store/types";
+import { store } from "./store";
 
 import api from "./api";
 
 import Header from "./components/Header";
 import EventsLibrary from "./components/EventsLibrary";
 import Footer from "./components/Footer";
-
-import { IEvent, IRawImage } from "./store/types";
 
 import "./App.scss";
 
@@ -53,11 +55,13 @@ function App() {
   }, [data]);
 
   return (
-    <main className="App">
-      <Header />
-      <EventsLibrary events={events} />
-      <Footer />
-    </main>
+    <Provider store={store}>
+      <main className="App">
+        <Header />
+        <EventsLibrary events={events} />
+        <Footer />
+      </main>
+    </Provider>
   );
 }
 
