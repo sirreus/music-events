@@ -51,6 +51,11 @@ export const NavBar: React.FC = () => {
 
   return (
     <nav>
+      <div
+        className="overlay"
+        style={{ display: open ? "block" : "none" }}
+        onClick={() => setOpen(!open)}
+      />
       {visibleFilters.map((filter, index) => (
         <Filter
           filter={filter}
