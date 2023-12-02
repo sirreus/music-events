@@ -1,0 +1,31 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 40px;
+
+  .button-wrapper {
+    position: relative;
+
+    .show-more-btn {
+      border: none;
+      background: none;
+
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      color: white;
+      margin-right: 24px;
+      cursor: pointer;
+
+      &.active {
+        color: #fec017;
+      }
+
+      &:hover {
+        color: #fec017;
+      }
+    }
+  }
+}

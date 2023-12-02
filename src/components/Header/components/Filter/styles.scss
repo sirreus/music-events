@@ -1,9 +1,4 @@
-nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  margin-top: 40px;
-}
+@use "../../../../variables.scss" as v;
 
 .genres-filter {
   font-size: 20px;
@@ -20,5 +15,20 @@ nav {
 
   &:hover {
     color: #fec017;
+  }
+}
+
+.filters-list {
+  .genres-filter {
+    margin: 8px 0;
+    color: v.$primary;
+
+    &.active {
+      color: #fec017;
+    }
+
+    &:hover {
+      color: #fec017;
+    }
   }
 }
