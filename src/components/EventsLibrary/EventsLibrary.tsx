@@ -1,56 +1,28 @@
 import React from "react";
 
 import EventCard from "../EventCard";
-
-import "./styles.scss";
 import EventCardBig from "../EventCardBig";
 
-interface IEvent {
-  id: number;
-  imageUrl: string;
-  selected: boolean;
+import { IEvent } from "../../store/types";
+
+import "./styles.scss";
+
+interface IEventsLibrary {
+  events?: IEvent[];
 }
 
-export const EventsLibrary = () => {
-  const emptyEvent = {
-    name: "string",
-    date: "string",
-    location: "string",
-    imageUrl: "string",
-  };
-  const events: IEvent[] = [
-    {
-      id: 1,
-      imageUrl: "1",
-      selected: true,
-    },
-    {
-      id: 2,
-      imageUrl: "2",
-      selected: false,
-    },
-    {
-      id: 3,
-      imageUrl: "3",
-      selected: false,
-    },
-    {
-      id: 4,
-      imageUrl: "4",
-      selected: false,
-    },
-  ];
+export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
   return (
     <>
       <div className="events-library">
         {events.map((event) => (
           <React.Fragment key={event.id}>
-            <EventCard imageUrl={event.imageUrl} />
+            <EventCard imageUrl={event.images.small} />
             {/* {event.selected && <EventCardBig />} */}
           </React.Fragment>
         ))}
       </div>
-      <EventCardBig event={emptyEvent} />
+      {/* <EventCardBig event={emptyEvent} /> */}
     </>
   );
 };
