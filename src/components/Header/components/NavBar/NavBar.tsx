@@ -5,6 +5,7 @@ import { selectFilter } from "../../../../store/filters/slices";
 import { IFilter } from "../../../../store/filters/types";
 import { RootState } from "../../../../store";
 
+import useWindowDimensions from "../../../../hooks/useWindowDimensions";
 import api from "../../../../api";
 
 import FiltersDropdown from "../FiltersDropdown";
@@ -14,15 +15,15 @@ import "./styles.scss";
 
 export const NavBar: React.FC = () => {
   const dispatch = useDispatch();
+  const { width } = useWindowDimensions();
 
-  const defaultFilters = [
-    { name: "All genres", id: "all-genres", isActive: true },
-  ];
+  const defaultFilters = [{ name: "All genres", id: "all-genres" }];
 
   const currentFilter: IFilter["name"] = useSelector(
     (state: RootState) => state.filters.name
   );
   const [filters, setFilters] = useState<IFilter[]>([...defaultFilters]);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
   const { data } = api.getMusicGenres();
@@ -44,10 +45,20 @@ export const NavBar: React.FC = () => {
   const selectFilterHandler = (index: number) => {
     const selectedFilter = filters[index];
     dispatch(selectFilter(selectedFilter));
+
+    if (open) setOpen(!open);
   };
 
-  const visibleFilters = filters.slice(0, 5);
-  const filtersOffset = visibleFilters.length + 1;
+  useEffect(() => {
+    if (width < 672) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [width]);
+
+  const visibleFilters = isMobile ? defaultFilters : filters.slice(0, 5);
+  const dropdownFilters = filters.slice(visibleFilters.length);
 
   return (
     <nav>
@@ -71,10 +82,10 @@ export const NavBar: React.FC = () => {
         </button>
         {open && (
           <FiltersDropdown
-            otherFilters={filters.slice(filtersOffset) || []}
+            otherFilters={dropdownFilters || []}
             onSelect={selectFilterHandler}
             currentFilter={currentFilter}
-            filtersOffset={filtersOffset}
+            filtersOffset={visibleFilters.length}
           />
         )}
       </div>

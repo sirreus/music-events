@@ -1,8 +1,15 @@
+@use "../../../../variables.scss" as v;
+@use "../../../../mixins" as m;
+
 nav {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   margin-top: 40px;
+
+  @include m.medium {
+    margin-top: 32px;
+  }
 
   .overlay {
     position: fixed;
@@ -28,7 +35,7 @@ nav {
       font-style: normal;
       font-weight: 400;
       line-height: 24px;
-      color: white;
+      color: v.$text-color;
       margin-right: 24px;
       cursor: pointer;
 
@@ -38,6 +45,18 @@ nav {
 
       &:hover {
         color: #fec017;
+      }
+
+      @include m.large {
+        font-size: 18px;
+        line-height: 22px;
+        margin-right: 22px;
+      }
+
+      @include m.medium {
+        font-size: 16px;
+        line-height: 20px;
+        margin-right: 20px;
       }
     }
   }
