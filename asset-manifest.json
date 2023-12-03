@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/music-events/static/css/main.18433a7c.css",
+    "main.js": "/music-events/static/js/main.9bb4ff32.js",
+    "static/js/787.39bbc4ab.chunk.js": "/music-events/static/js/787.39bbc4ab.chunk.js",
+    "index.html": "/music-events/index.html",
+    "main.18433a7c.css.map": "/music-events/static/css/main.18433a7c.css.map",
+    "main.9bb4ff32.js.map": "/music-events/static/js/main.9bb4ff32.js.map",
+    "787.39bbc4ab.chunk.js.map": "/music-events/static/js/787.39bbc4ab.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.18433a7c.css",
+    "static/js/main.9bb4ff32.js"
+  ]
+}
