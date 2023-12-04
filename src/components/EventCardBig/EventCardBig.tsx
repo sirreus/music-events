@@ -1,29 +1,32 @@
 import React from "react";
 
 import "./styles.scss";
-
-interface IEventDetails {
-  name: string;
-  date: string;
-  location: string;
-  imageUrl: string;
-}
+import { IEvent } from "../../store/types";
 
 interface IEventCardBig {
-  event: IEventDetails;
+  event: IEvent;
+  extraRow: number;
+  onClose: () => void;
 }
 
-export const EventCardBig: React.FC<IEventCardBig> = ({ event }) => {
-  const { name, date, location, imageUrl } = event;
+export const EventCardBig: React.FC<IEventCardBig> = ({
+  event,
+  extraRow,
+  onClose,
+}) => {
+  const { name, date, location, images } = event;
+
+  const eventDate = `${date.date} ${date.time}`;
+  const eventLocation = `${location.country}, ${location.city}, ${location.address}`;
 
   return (
-    <div className="event-card-big">
+    <div className="event-card-big" style={{ gridRow: `${extraRow}` }}>
       <div className="event-details-wrapper">
         <div className="event-details">
           <h2 className="event-name">{name}</h2>
           <div className="event-info">
-            <div className="event-date">{date}</div>
-            <span className="event-location">{location}</span>
+            <div className="event-date">{eventDate}</div>
+            <span className="event-location">{eventLocation}</span>
           </div>
           <p className="event-description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -35,10 +38,11 @@ export const EventCardBig: React.FC<IEventCardBig> = ({ event }) => {
           </p>
         </div>
 
-        <button>Close details</button>
+        <button onClick={() => onClose()}>Close details</button>
       </div>
-
-      <img src={imageUrl} className="event-cover" alt="" />
+      <div className="image-wrapper">
+        <img src={images.big} className="event-cover" alt="" />
+      </div>
     </div>
   );
 };

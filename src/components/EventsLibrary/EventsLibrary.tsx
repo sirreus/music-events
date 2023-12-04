@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 
 import EventCard from "../EventCard";
 import EventCardBig from "../EventCardBig";
@@ -14,12 +14,48 @@ interface IEventsLibrary {
 // const selected = true;
 
 export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
+  const [selectedEvent, setSelectedEvent] = useState<IEvent | null>(null);
+  const [isVisible, setVisible] = useState<boolean>(false);
+  const [extraRow, setExtraRow] = useState<number>(0);
+
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  const handelShowExtra = (index: number) => {
+    setSelectedEvent(events[index]);
+    const grid = gridRef.current;
+
+    if (!grid) return;
+
+    // define amount of column into grid
+    let numberOfColumns =
+      getComputedStyle(grid).gridTemplateColumns.split(" ").length;
+
+    const chunk = events.slice(0, index + 1);
+    setExtraRow(Math.ceil(chunk.length / numberOfColumns) + 1);
+
+    if (!isVisible && selectedEvent?.id !== events[index].id) {
+      setVisible(true);
+    }
+
+    if (isVisible && selectedEvent?.id === events[index].id) {
+      setSelectedEvent(null);
+      setVisible(false);
+    }
+  };
+
+  const handelCloseBigCard = () => {
+    setSelectedEvent(null);
+    setVisible(false);
+  };
+
+  console.log();
   return (
     <>
       <div
         className={
           events.length === 0 ? "events-library empty" : "events-library"
         }
+        ref={gridRef}
       >
         {events.length === 0 && (
           <div className="notification">
@@ -30,24 +66,24 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
             </span>
           </div>
         )}
-        {events.map((event) => (
+        {events.map((event, index) => (
           <React.Fragment key={event.id}>
-            <EventCard imageUrl={event.images.small} />
-            {/* {event.selected && <EventCardBig event={event} />} */}
+            <EventCard
+              imageUrl={event.images.small}
+              index={index}
+              onSelect={handelShowExtra}
+              isSelected={selectedEvent?.id === event.id}
+            />
           </React.Fragment>
         ))}
+        {isVisible && selectedEvent && (
+          <EventCardBig
+            event={selectedEvent}
+            extraRow={extraRow}
+            onClose={handelCloseBigCard}
+          />
+        )}
       </div>
-
-      {/* TODO: find solution for big banner */}
-      {/* {selected && (
-        <div
-          style={{
-            width: "100%",
-            height: "400px",
-            backgroundColor: "black",
-          }}
-        />
-      )} */}
     </>
   );
 };

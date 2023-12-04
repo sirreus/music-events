@@ -1,10 +1,30 @@
 @use "../../variables.scss" as v;
+@use "../../mixins" as m;
 
 .event-card-big {
-  width: 100%;
+  position: relative;
+  width: 104.5%;
+  grid-column: 1 / -1;
+  margin: 0 -32px 0 -32px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   background-color: v.$primary;
+
+  @include m.desktop {
+    width: 100vw;
+  }
+
+  @include m.large {
+    justify-content: flex-end;
+    margin: 0 -24px 0 -24px;
+  }
+
+  @include m.medium {
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    margin: 0 -16px 0 -16px;
+  }
 
   .event-details-wrapper {
     display: flex;
@@ -12,7 +32,7 @@
     justify-content: space-between;
 
     width: calc(100% - 758px);
-    padding: 32px;
+    padding: 32px 74px 32px 32px;
 
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -23,6 +43,19 @@
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
+
+    @include m.desktop {
+      width: 50%;
+      padding: 24px;
+    }
+
+    @include m.large {
+      width: 60%;
+    }
+
+    @include m.medium {
+      width: 100%;
+    }
 
     .event-details {
       .event-name {
@@ -52,22 +85,71 @@
       height: 40px;
       border: 1px solid v.$text-color;
       background-color: v.$primary;
+      cursor: pointer;
 
       font-size: 16px;
       font-style: normal;
       font-weight: 400;
       line-height: 24px;
       color: v.$text-color;
+
+      @include m.large {
+        margin-top: 32px;
+      }
+    }
+  }
+
+  .image-wrapper {
+    position: relative;
+    width: 758px;
+    height: 400px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        #252b40 6.73%,
+        rgba(37, 43, 64, 0) 33.05%
+      );
+
+      @include m.medium {
+        top: auto;
+        bottom: -1px;
+        left: 0;
+        background: linear-gradient(
+          360deg,
+          #252b40 6.73%,
+          rgba(37, 43, 64, 0) 33.05%
+        );
+      }
+    }
+
+    @include m.desktop {
+      width: 50%;
+    }
+
+    @include m.large {
+      height: inherit;
+    }
+
+    @include m.medium {
+      width: 100%;
     }
   }
 
   img {
-    width: 758px;
+    width: 100%;
     height: 400px;
-    background: linear-gradient(
-      90deg,
-      #252b40 6.73%,
-      rgba(37, 43, 64, 0) 33.05%
-    );
+    object-fit: cover;
+    border: 0;
+
+    @include m.large {
+      height: 100%;
+    }
   }
 }

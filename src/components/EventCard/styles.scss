@@ -1,15 +1,39 @@
+@use "../../variables.scss" as v;
 @use "../../mixins.scss" as m;
 
 .event-card {
+  position: relative;
   width: 332px;
   height: 221px;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   opacity: 0.8;
 
-  .selected,
+  &.selected,
   &:hover {
     opacity: 1;
+  }
+
+  &.selected {
+    &::after {
+      border-left: solid transparent 10px;
+      border-right: solid transparent 10px;
+      border-bottom: solid v.$primary 10px;
+      bottom: -16px;
+      content: " ";
+      height: 0;
+      left: 50%;
+      margin-left: -13px;
+      position: absolute;
+      width: 0;
+
+      @include m.desktop {
+        border-left: solid transparent 12px;
+        border-right: solid transparent 12px;
+        border-bottom: solid v.$primary 12px;
+        bottom: -24px;
+      }
+    }
   }
 
   @include m.desktop {
