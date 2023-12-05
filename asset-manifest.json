@@ -1,15 +1,18 @@
 {
   "files": {
-    "main.css": "/music-events/static/css/main.a5ca7b2d.css",
-    "main.js": "/music-events/static/js/main.7ca03467.js",
+    "main.css": "/music-events/static/css/main.fe203768.css",
+    "main.js": "/music-events/static/js/main.e940b699.js",
     "static/js/787.39bbc4ab.chunk.js": "/music-events/static/js/787.39bbc4ab.chunk.js",
+    "static/media/calendar.svg": "/music-events/static/media/calendar.2797ead44cecc00fa71f.svg",
+    "static/media/place.svg": "/music-events/static/media/place.2fb71b0192f2efff2c95.svg",
     "index.html": "/music-events/index.html",
-    "main.a5ca7b2d.css.map": "/music-events/static/css/main.a5ca7b2d.css.map",
-    "main.7ca03467.js.map": "/music-events/static/js/main.7ca03467.js.map",
+    "static/media/search.svg": "/music-events/static/media/search.3858d9a81eb86e7f19d2.svg",
+    "main.fe203768.css.map": "/music-events/static/css/main.fe203768.css.map",
+    "main.e940b699.js.map": "/music-events/static/js/main.e940b699.js.map",
     "787.39bbc4ab.chunk.js.map": "/music-events/static/js/787.39bbc4ab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a5ca7b2d.css",
-    "static/js/main.7ca03467.js"
+    "static/css/main.fe203768.css",
+    "static/js/main.e940b699.js"
   ]
 }
