@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import { filtersSlice } from "./filters/slices";
 import { eventsSlice } from "./events/slices";
+import { eventsSearchSlice } from "./search/slices";
 
 const persistConfig = {
   key: "root",
@@ -16,11 +17,16 @@ const persistedFiltersSlice = persistReducer(
 );
 
 const persistedEventsSlice = persistReducer(persistConfig, eventsSlice.reducer);
+const persistedEventsSearchSlice = persistReducer(
+  persistConfig,
+  eventsSearchSlice.reducer
+);
 
 export const store = configureStore({
   reducer: {
     filters: persistedFiltersSlice,
     events: persistedEventsSlice,
+    search: persistedEventsSearchSlice,
   },
   middleware: getDefaultMiddleware({
     serializableCheck: false,

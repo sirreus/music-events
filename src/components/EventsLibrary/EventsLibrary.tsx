@@ -25,13 +25,13 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
   const dispatch = useDispatch();
 
   const selectedEventId: ISelectedEvent["eventId"] = useSelector(
-    (state: RootState) => state.events.eventId
+    (state: RootState) => state.events.selectedEvent.eventId
   );
   const isDetailsVisible: ISelectedEvent["isDetailsVisible"] = useSelector(
-    (state: RootState) => state.events.isDetailsVisible
+    (state: RootState) => state.events.selectedEvent.isDetailsVisible
   );
   const bigCardRow: ISelectedEvent["cardDetailsPosition"] = useSelector(
-    (state: RootState) => state.events.cardDetailsPosition
+    (state: RootState) => state.events.selectedEvent.cardDetailsPosition
   );
 
   /**
@@ -70,8 +70,6 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
     dispatch(removeSelectedEvent());
   };
 
-  console.log(isDetailsVisible);
-  console.log(selectedEventId);
   return (
     <>
       <div

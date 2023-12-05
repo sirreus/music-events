@@ -28,7 +28,7 @@ export const EventCardBig: React.FC<IEventCardBig> = ({
   const { data } = api.getEventDetails(eventId);
 
   const savedEventData: ISelectedEvent["details"] = useSelector(
-    (state: RootState) => state.events.details
+    (state: RootState) => state.events.selectedEvent.details
   );
   const [event, setEvent] = useState<ISelectedEventDetails | null>(
     null || savedEventData
