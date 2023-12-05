@@ -1,32 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  ISelectedEvent,
+  ISelectedEventDetails,
+} from "../../store/events/types";
+
+import api from "../../api";
+import parseRawEventDetails from "../../helpers/parseRawEventDetails";
 
 import "./styles.scss";
-import { IEvent } from "../../store/types";
+import { setSelectedEventDetails } from "../../store/events/slices";
+import { RootState } from "../../store";
 
 interface IEventCardBig {
-  event: IEvent;
+  eventId: string;
   extraRow: number;
   onClose: () => void;
 }
 
 export const EventCardBig: React.FC<IEventCardBig> = ({
-  event,
+  eventId,
   extraRow,
   onClose,
 }) => {
-  const { name, date, location, images } = event;
+  const dispatch = useDispatch();
+  const { data } = api.getEventDetails(eventId);
 
-  const eventDate = `${date.date} ${date.time}`;
-  const eventLocation = `${location.country}, ${location.city}, ${location.address}`;
+  const savedEventData: ISelectedEvent["details"] = useSelector(
+    (state: RootState) => state.events.details
+  );
+  const [event, setEvent] = useState<ISelectedEventDetails | null>(
+    null || savedEventData
+  );
+
+  useEffect(() => {
+    if (data) {
+      const eventDetails = parseRawEventDetails([data]);
+
+      setEvent(eventDetails[0]);
+
+      /**
+       * save event details into Redux store
+       * this is needed if we want to save the visible state of this 'big card'
+       * with event data after refreshing the page
+       */
+      dispatch(setSelectedEventDetails(eventDetails[0]));
+    }
+  }, [data, dispatch]);
 
   return (
     <div className="event-card-big" style={{ gridRow: `${extraRow}` }}>
       <div className="event-details-wrapper">
         <div className="event-details">
-          <h2 className="event-name">{name}</h2>
+          <h2 className="event-name">{event?.name}</h2>
           <div className="event-info">
-            <div className="event-date">{eventDate}</div>
-            <span className="event-location">{eventLocation}</span>
+            <div className="event-date">{event?.date}</div>
+            <span className="event-location">{event?.location}</span>
           </div>
           <p className="event-description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -41,7 +71,7 @@ export const EventCardBig: React.FC<IEventCardBig> = ({
         <button onClick={() => onClose()}>Close details</button>
       </div>
       <div className="image-wrapper">
-        <img src={images.big} className="event-cover" alt="" />
+        <img src={event?.images} className="event-cover" alt="" />
       </div>
     </div>
   );

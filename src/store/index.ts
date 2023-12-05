@@ -3,6 +3,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import { filtersSlice } from "./filters/slices";
+import { eventsSlice } from "./events/slices";
 
 const persistConfig = {
   key: "root",
@@ -14,9 +15,12 @@ const persistedFiltersSlice = persistReducer(
   filtersSlice.reducer
 );
 
+const persistedEventsSlice = persistReducer(persistConfig, eventsSlice.reducer);
+
 export const store = configureStore({
   reducer: {
     filters: persistedFiltersSlice,
+    events: persistedEventsSlice,
   },
   middleware: getDefaultMiddleware({
     serializableCheck: false,

@@ -1,4 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  setSelectedEventId,
+  setDetailsVisible,
+  removeSelectedEvent,
+  setCardDetailsPosition,
+} from "../../store/events/slices";
+import { RootState } from "../../store";
+import { ISelectedEvent } from "../../store/events/types";
 
 import EventCard from "../EventCard";
 import EventCardBig from "../EventCardBig";
@@ -11,44 +21,57 @@ interface IEventsLibrary {
   events?: IEvent[];
 }
 
-// const selected = true;
-
 export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
-  const [selectedEvent, setSelectedEvent] = useState<IEvent | null>(null);
-  const [isVisible, setVisible] = useState<boolean>(false);
-  const [extraRow, setExtraRow] = useState<number>(0);
+  const dispatch = useDispatch();
+
+  const selectedEventId: ISelectedEvent["eventId"] = useSelector(
+    (state: RootState) => state.events.eventId
+  );
+  const isDetailsVisible: ISelectedEvent["isDetailsVisible"] = useSelector(
+    (state: RootState) => state.events.isDetailsVisible
+  );
+  const bigCardRow: ISelectedEvent["cardDetailsPosition"] = useSelector(
+    (state: RootState) => state.events.cardDetailsPosition
+  );
+
+  /**
+   * this component state is need if don't want to save
+   * big card visible after refreshing the page
+   */
+  // const [selectedEvent, setSelectedEvent] = useState<IEvent | null>(null);
+  // const [isVisible, setVisible] = useState<boolean>(false);
+  // const [extraRow, setExtraRow] = useState<number>(0);
 
   const gridRef = useRef<HTMLDivElement>(null);
 
   const handelShowExtra = (index: number) => {
-    setSelectedEvent(events[index]);
     const grid = gridRef.current;
-
     if (!grid) return;
+
+    dispatch(setSelectedEventId(events[index].id));
 
     // define amount of column into grid
     let numberOfColumns =
       getComputedStyle(grid).gridTemplateColumns.split(" ").length;
-
     const chunk = events.slice(0, index + 1);
-    setExtraRow(Math.ceil(chunk.length / numberOfColumns) + 1);
+    const extraCardPosition = Math.ceil(chunk.length / numberOfColumns) + 1;
+    dispatch(setCardDetailsPosition(extraCardPosition));
 
-    if (!isVisible && selectedEvent?.id !== events[index].id) {
-      setVisible(true);
+    if (!isDetailsVisible && selectedEventId !== events[index].id) {
+      dispatch(setDetailsVisible(true));
     }
 
-    if (isVisible && selectedEvent?.id === events[index].id) {
-      setSelectedEvent(null);
-      setVisible(false);
+    if (isDetailsVisible && selectedEventId === events[index].id) {
+      dispatch(removeSelectedEvent());
     }
   };
 
   const handelCloseBigCard = () => {
-    setSelectedEvent(null);
-    setVisible(false);
+    dispatch(removeSelectedEvent());
   };
 
-  console.log();
+  console.log(isDetailsVisible);
+  console.log(selectedEventId);
   return (
     <>
       <div
@@ -72,14 +95,14 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
               imageUrl={event.images.small}
               index={index}
               onSelect={handelShowExtra}
-              isSelected={selectedEvent?.id === event.id}
+              isSelected={selectedEventId === event.id}
             />
           </React.Fragment>
         ))}
-        {isVisible && selectedEvent && (
+        {events.length > 0 && isDetailsVisible && selectedEventId && (
           <EventCardBig
-            event={selectedEvent}
-            extraRow={extraRow}
+            eventId={selectedEventId}
+            extraRow={bigCardRow}
             onClose={handelCloseBigCard}
           />
         )}
