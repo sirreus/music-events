@@ -6,6 +6,7 @@ import {
   setDetailsVisible,
   removeSelectedEvent,
   setCardDetailsPosition,
+  removeSelectedEventDetails,
 } from "../../store/events/slices";
 import { RootState } from "../../store";
 import { ISelectedEvent } from "../../store/events/types";
@@ -45,6 +46,8 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
   const gridRef = useRef<HTMLDivElement>(null);
 
   const handelShowExtra = (index: number) => {
+    dispatch(removeSelectedEventDetails()); // clean up details for optimization displaying data
+
     const grid = gridRef.current;
     if (!grid) return;
 
