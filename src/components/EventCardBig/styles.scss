@@ -69,8 +69,33 @@
       .event-info {
         margin: 16px 0;
 
-        .event-date {
+        .date-wrapper {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
           margin-bottom: 8px;
+
+          .event-date-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            background-image: url("../../assets/calendar.svg");
+            background-repeat: no-repeat;
+          }
+        }
+
+        .location-wrapper {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .event-location-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            background-image: url("../../assets/place.svg");
+            background-repeat: no-repeat;
+          }
         }
       }
 

@@ -55,8 +55,15 @@ export const EventCardBig: React.FC<IEventCardBig> = ({
         <div className="event-details">
           <h2 className="event-name">{event?.name}</h2>
           <div className="event-info">
-            <div className="event-date">{event?.date}</div>
-            <span className="event-location">{event?.location}</span>
+            <div className="date-wrapper">
+              <div className="event-date-icon" />
+              <div className="event-date">{event?.date}</div>
+            </div>
+
+            <div className="location-wrapper">
+              <div className="event-location-icon" />
+              <span className="event-location">{event?.location}</span>
+            </div>
           </div>
           <p className="event-description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
