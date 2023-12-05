@@ -14,11 +14,6 @@ export interface ILocation {
   address: string;
 }
 
-export interface IImages {
-  small: string;
-  big: string;
-}
-
 export interface IRawImage {
   fallback: boolean;
   height: number;
@@ -31,7 +26,7 @@ export interface IEvent {
   id: string;
   name: string;
   genres: IGenres;
-  date: IDate;
+  date: string;
   location: ILocation;
-  images: IImages;
+  images: string;
 }

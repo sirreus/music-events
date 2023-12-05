@@ -90,7 +90,7 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
         {events.map((event, index) => (
           <React.Fragment key={event.id}>
             <EventCard
-              imageUrl={event.images.small}
+              imageUrl={event.images}
               index={index}
               onSelect={handelShowExtra}
               isSelected={selectedEventId === event.id}

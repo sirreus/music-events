@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
     }
 
     const fuse = new Fuse(eventsData, {
-      keys: ["name"],
+      keys: ["name", "genres.name"], // as additional search keys can add 'location.country' and 'location.city'
     });
 
     const results = fuse.search(query);
@@ -46,11 +46,14 @@ export const Header: React.FC = () => {
     <header>
       <div className="top-wrapper">
         <h1>Music events</h1>
-        <input
-          className="search-input"
-          placeholder="Search for events..."
-          onChange={(e) => searchItem(e.target.value)}
-        />
+        <form className="search-form">
+          <i className="search-icon" />
+          <input
+            className="search-input"
+            placeholder="Search for events..."
+            onChange={(e) => searchItem(e.target.value)}
+          />
+        </form>
       </div>
       <NavBar />
     </header>

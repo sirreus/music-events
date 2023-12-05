@@ -16,19 +16,13 @@ const initialState: IEventsStore = {
         id: "",
         name: "",
       },
-      date: {
-        date: "",
-        time: "",
-      },
+      date: "",
       location: {
         country: "",
         city: "",
         address: "",
       },
-      images: {
-        small: "",
-        big: "",
-      },
+      images: "",
     },
   ],
   selectedEvent: {

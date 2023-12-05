@@ -44,21 +44,42 @@ header {
       }
     }
 
-    .search-input {
-      width: 336px;
-      height: 20px;
-      padding: 8px 16px;
+    .search-form {
+      position: relative;
 
-      @include m.medium {
-        max-width: 272px;
+      .search-icon {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        width: 16px;
+        height: 16px;
+        background-image: url(../../assets/search.svg);
+        background-repeat: no-repeat;
+        opacity: 0.7;
+        z-index: 1;
+
+        @include m.small {
+          top: 28px;
+        }
       }
 
-      @include m.small {
-        margin-top: 16px;
-      }
+      .search-input {
+        position: relative;
+        width: 336px;
+        height: 20px;
+        padding: 8px 16px 8px 32px;
 
-      @include m.small {
-        max-width: 252px;
+        @include m.medium {
+          max-width: 272px;
+        }
+
+        @include m.small {
+          margin-top: 16px;
+        }
+
+        @include m.small {
+          max-width: 252px;
+        }
       }
     }
   }

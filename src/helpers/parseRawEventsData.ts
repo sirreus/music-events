@@ -1,29 +1,29 @@
-import { IRawImage } from "../store/types";
+import { IEvent, IRawImage } from "../store/types";
 
-function parseRawEventsData(data: any) {
+function parseRawEventsData(data: any): IEvent[] {
   return data.map((rawData: any) => {
+    const { dates, _embedded: location, images } = rawData;
+
+    const eventDate = `${dates.start.localDate} ${
+      dates.start.localTime ||
+      dates.access.startDateTime.split("T")[1].split("Z")[0]
+    }`;
+
+    const eventImage = images.find(
+      (image: IRawImage) => image.ratio === "4_3"
+    ).url;
+
     return {
       id: rawData.id,
       name: rawData.name,
       genres: rawData.classifications[0].genre,
-      date: {
-        date: rawData.dates.start.localDate,
-        time:
-          rawData.dates.start.localTime ||
-          rawData.dates.access.startDateTime.split("T")[1].split("Z")[0],
-      },
+      date: eventDate,
       location: {
-        country: rawData._embedded.venues[0].country.name,
-        city: rawData._embedded.venues[0].city.name,
-        address: rawData._embedded.venues[0].address.line1,
+        country: location.venues[0].country.name,
+        city: location.venues[0].city.name,
+        address: location.venues[0].address.line1,
       },
-      images: {
-        small: rawData.images.find((image: IRawImage) => image.ratio === "4_3")
-          .url,
-        big: rawData.images.find(
-          (image: IRawImage) => image.ratio === "3_2" && image.height === 427
-        ).url,
-      },
+      images: eventImage,
     };
   });
 }
