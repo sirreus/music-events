@@ -33,8 +33,8 @@ function getRandomIndex(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-describe("rendering Filter with a props", () => {
-  it("filter should be active", () => {
+describe("Rendering Filter with a props", () => {
+  it("Filter should be active", () => {
     const filterIndex = 0;
     const filterData = genres[filterIndex];
     render(
@@ -50,7 +50,7 @@ describe("rendering Filter with a props", () => {
     );
   });
 
-  it("filter should be not active", () => {
+  it("Filter should be not active", () => {
     const filterIndex = getRandomIndex(1, genres.length - 1);
     let currentFilter = genres[0].name;
     render(
@@ -66,7 +66,7 @@ describe("rendering Filter with a props", () => {
     );
   });
 
-  it("set filter active", () => {
+  it("Set filter active", () => {
     const handleClick = jest.fn((index: number) => {
       currentFilter = genres[index].name;
     });
