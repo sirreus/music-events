@@ -8,6 +8,7 @@ import { IEvent } from "../../store/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setSearchResults, setSearchValue } from "../../store/search/slices";
+import { setDetailsVisible } from "../../store/events/slices";
 
 export const Header: React.FC = () => {
   const dispatch = useDispatch();
@@ -15,9 +16,15 @@ export const Header: React.FC = () => {
   const eventsData: IEvent[] = useSelector(
     (state: RootState) => state.events.eventsData
   );
+  const isEventDetailsVisible: boolean = useSelector(
+    (state: RootState) => state.events.selectedEvent.isDetailsVisible
+  );
 
   const searchItem = (query: string) => {
     dispatch(setSearchValue(query));
+
+    // hide prev open event details
+    if (isEventDetailsVisible) dispatch(setDetailsVisible(false));
 
     if (!query) {
       dispatch(setSearchResults(eventsData));

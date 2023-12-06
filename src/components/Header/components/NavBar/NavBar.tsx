@@ -12,6 +12,7 @@ import FiltersDropdown from "../FiltersDropdown";
 import { Filter } from "../Filter/Filter";
 
 import "./styles.scss";
+import { setDetailsVisible } from "../../../../store/events/slices";
 
 export const NavBar: React.FC = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,10 @@ export const NavBar: React.FC = () => {
   const currentFilter: IFilter["name"] = useSelector(
     (state: RootState) => state.filters.name
   );
+  const isEventDetailsVisible: boolean = useSelector(
+    (state: RootState) => state.events.selectedEvent.isDetailsVisible
+  );
+
   const [filters, setFilters] = useState<IFilter[]>([...defaultFilters]);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
@@ -43,6 +48,9 @@ export const NavBar: React.FC = () => {
   }, [data, filters]);
 
   const selectFilterHandler = (index: number) => {
+    // hide prev open event details
+    if (isEventDetailsVisible) dispatch(setDetailsVisible(false));
+
     const selectedFilter = filters[index];
     dispatch(selectFilter(selectedFilter));
 
