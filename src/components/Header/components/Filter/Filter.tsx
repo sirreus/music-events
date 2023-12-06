@@ -21,6 +21,9 @@ export const Filter: React.FC<FilterComponent> = ({
       className={
         filter.name === currentFilter ? "genres-filter active" : "genres-filter"
       }
+      data-testid={
+        filter.name === currentFilter ? "genres-filter-active" : "genres-filter"
+      }
       onClick={() => onSelect(index)}
       key={index}
     >
