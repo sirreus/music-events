@@ -2,21 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { selectFilter } from "../../../../store/filters/slices";
+import { setDetailsVisible } from "../../../../store/events/slices";
 import { IFilter } from "../../../../store/filters/types";
 import { RootState } from "../../../../store";
-
-import useWindowDimensions from "../../../../hooks/useWindowDimensions";
-import api from "../../../../api";
 
 import FiltersDropdown from "../FiltersDropdown";
 import { Filter } from "../Filter/Filter";
 
 import "./styles.scss";
-import { setDetailsVisible } from "../../../../store/events/slices";
 
-export const NavBar: React.FC = () => {
+interface INavBar {
+  genresFilters: IFilter[] | undefined;
+  isMobile: boolean;
+}
+
+export const NavBar: React.FC<INavBar> = ({ genresFilters, isMobile }) => {
   const dispatch = useDispatch();
-  const { width } = useWindowDimensions();
 
   const defaultFilters = [{ name: "All genres", id: "all-genres" }];
 
@@ -28,24 +29,13 @@ export const NavBar: React.FC = () => {
   );
 
   const [filters, setFilters] = useState<IFilter[]>([...defaultFilters]);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data } = api.getMusicGenres();
-
   useEffect(() => {
-    if (data && filters.length < 2) {
-      const genresRawData = data.segment._embedded.genres;
-
-      const formatData = genresRawData.map(
-        ({ id, name }: { id: string; name: string }) => {
-          return { id, name };
-        }
-      );
-
-      setFilters(filters.concat(formatData));
+    if (genresFilters && filters.length < 2) {
+      setFilters(filters.concat(genresFilters));
     }
-  }, [data, filters]);
+  }, [genresFilters, filters]);
 
   const selectFilterHandler = (index: number) => {
     // hide prev open event details
@@ -56,14 +46,6 @@ export const NavBar: React.FC = () => {
 
     if (open) setOpen(!open);
   };
-
-  useEffect(() => {
-    if (width < 672) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  }, [width]);
 
   const visibleFilters = isMobile ? defaultFilters : filters.slice(0, 5);
   const dropdownFilters = filters.slice(visibleFilters.length);
