@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { selectFilter } from "../../../../store/filters/slices";
-import { setDetailsVisible } from "../../../../store/events/slices";
+import { removeSelectedEvent } from "../../../../store/events/slices";
 import { IFilter } from "../../../../store/filters/types";
 import { RootState } from "../../../../store";
 
@@ -39,7 +39,7 @@ export const NavBar: React.FC<INavBar> = ({ genresFilters, isMobile }) => {
 
   const selectFilterHandler = (index: number) => {
     // hide prev open event details
-    if (isEventDetailsVisible) dispatch(setDetailsVisible(false));
+    if (isEventDetailsVisible) dispatch(removeSelectedEvent());
 
     const selectedFilter = filters[index];
     dispatch(selectFilter(selectedFilter));

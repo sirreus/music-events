@@ -76,6 +76,8 @@ export const eventsSlice = createSlice({
       state.selectedEvent.isDetailsVisible =
         initialState.selectedEvent.isDetailsVisible;
       state.selectedEvent.details = initialState.selectedEvent.details;
+      state.selectedEvent.cardDetailsPosition =
+        initialState.selectedEvent.cardDetailsPosition;
     },
   },
 });
