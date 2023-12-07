@@ -17,12 +17,19 @@ import EventCardBig from "../EventCardBig";
 import { IEvent } from "../../store/types";
 
 import "./styles.scss";
+import Notification from "./components/Notification";
 
 interface IEventsLibrary {
   events?: IEvent[];
+  isLoading: boolean;
+  isError: boolean;
 }
 
-export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
+export const EventsLibrary: React.FC<IEventsLibrary> = ({
+  events = [],
+  isLoading,
+  isError,
+}) => {
   const dispatch = useDispatch();
 
   const selectedEventId: ISelectedEvent["eventId"] = useSelector(
@@ -74,23 +81,31 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
   };
 
   return (
-    <>
-      <div
-        className={
-          events.length === 0 ? "events-library empty" : "events-library"
-        }
-        ref={gridRef}
-      >
-        {events.length === 0 && (
-          <div className="notification">
-            <span className="text bold">Sorry,</span>
-            <span className="text">
-              we didn't find any event that matches your chosen genre or search
-              result.
-            </span>
-          </div>
-        )}
-        {events.map((event, index) => (
+    <div
+      className={
+        events.length === 0 || isError || isLoading
+          ? "events-library empty"
+          : "events-library"
+      }
+      ref={gridRef}
+    >
+      {isLoading && <Notification boldText="Loading ..." />}
+      {isError && (
+        <Notification
+          boldText="We have some problem..."
+          text=" please reload a page."
+        />
+      )}
+      {events.length === 0 && (
+        <Notification
+          boldText="Hmm..."
+          text="we didn't find any event that matches your chosen genre or search
+              result."
+        />
+      )}
+
+      {!isLoading &&
+        events.map((event, index) => (
           <React.Fragment key={event.id}>
             <EventCard
               imageUrl={event.images}
@@ -100,14 +115,14 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({ events = [] }) => {
             />
           </React.Fragment>
         ))}
-        {events.length > 0 && isDetailsVisible && selectedEventId && (
-          <EventCardBig
-            eventId={selectedEventId}
-            extraRow={bigCardRow}
-            onClose={handelCloseBigCard}
-          />
-        )}
-      </div>
-    </>
+
+      {events.length > 0 && isDetailsVisible && selectedEventId && (
+        <EventCardBig
+          eventId={selectedEventId}
+          extraRow={bigCardRow}
+          onClose={handelCloseBigCard}
+        />
+      )}
+    </div>
   );
 };

@@ -17,7 +17,7 @@ import { setEvents } from "../store/events/slices";
 
 export const MainPage: React.FC = () => {
   const dispatch = useDispatch();
-  const { data } = api.getMusicEvents();
+  const { data, error, isLoading } = api.getMusicEvents();
 
   const currentFilter: IFilter["name"] = useSelector(
     (state: RootState) => state.filters.name
@@ -73,7 +73,11 @@ export const MainPage: React.FC = () => {
   return (
     <main className="App">
       <Header />
-      <EventsLibrary events={visibleEvents} />
+      <EventsLibrary
+        events={visibleEvents}
+        isLoading={isLoading}
+        isError={error}
+      />
       <Footer />
     </main>
   );
