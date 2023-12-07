@@ -1,5 +1,5 @@
-@use "../../variables.scss" as v;
-@use "../../mixins" as m;
+@use "../../../../variables.scss" as v;
+@use "../../../../mixins" as m;
 
 .event-card-big {
   position: relative;
@@ -79,7 +79,7 @@
             width: 16px;
             height: 16px;
             margin-right: 8px;
-            background-image: url("../../assets/calendar.svg");
+            background-image: url("../../../../assets/calendar.svg");
             background-repeat: no-repeat;
           }
         }
@@ -93,7 +93,7 @@
             width: 16px;
             height: 16px;
             margin-right: 8px;
-            background-image: url("../../assets/place.svg");
+            background-image: url("../../../../assets/place.svg");
             background-repeat: no-repeat;
           }
         }

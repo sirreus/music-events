@@ -11,8 +11,8 @@ import {
 import { RootState } from "../../store";
 import { ISelectedEvent } from "../../store/events/types";
 
-import EventCard from "../EventCard";
-import EventCardBig from "../EventCardBig";
+import EventCard from "./components/EventCard";
+import EventCardBig from "./components/EventCardBig";
 
 import { IEvent } from "../../store/types";
 

@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ISelectedEvent,
   ISelectedEventDetails,
-} from "../../store/events/types";
+} from "../../../../store/events/types";
 
-import api from "../../api";
-import parseRawEventDetails from "../../helpers/parseRawEventDetails";
+import api from "../../../../api";
+import parseRawEventDetails from "../../../../helpers/parseRawEventDetails";
 
 import "./styles.scss";
-import { setSelectedEventDetails } from "../../store/events/slices";
-import { RootState } from "../../store";
+import { setSelectedEventDetails } from "../../../../store/events/slices";
+import { RootState } from "../../../../store";
 
 interface IEventCardBig {
   eventId: string;
