@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 import { requestFetcher } from "./requestFetcher";
 
 // API key you can use: 0JIWxBrWrDwCSXZzhD9HKwPngGfGc9fq
@@ -7,16 +7,19 @@ const API_BASE_URL = "https://app.ticketmaster.com/discovery/v2";
 const API_KEY = "0JIWxBrWrDwCSXZzhD9HKwPngGfGc9fq";
 
 const useGetMusicEvents = () =>
-  useSWR(
+  useSWRImmutable(
     `${API_BASE_URL}/events?countryCode=FI&classificationId=KZFzniwnSyZfZ7v7nJ&apikey=${API_KEY}`,
     requestFetcher
   );
 
 const useGetEventDetails = (eventId: string) =>
-  useSWR(`${API_BASE_URL}/events/${eventId}?apikey=${API_KEY}`, requestFetcher);
+  useSWRImmutable(
+    `${API_BASE_URL}/events/${eventId}?apikey=${API_KEY}`,
+    requestFetcher
+  );
 
 const useGetMusicGenres = () =>
-  useSWR(
+  useSWRImmutable(
     `${API_BASE_URL}/classifications/KZFzniwnSyZfZ7v7nJ?apikey=${API_KEY}`,
     requestFetcher
   );
