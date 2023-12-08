@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -18,6 +19,7 @@ import { IEvent } from "../../store/types";
 
 import "./styles.scss";
 import Notification from "./components/Notification";
+// import { AngularJSButtonComponent } from "./components/AngularButton/angularjs-button-component";
 
 interface IEventsLibrary {
   events?: IEvent[];
@@ -33,13 +35,13 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({
   const dispatch = useDispatch();
 
   const selectedEventId: ISelectedEvent["eventId"] = useSelector(
-    (state: RootState) => state.events.selectedEvent.eventId
+    (state: RootState) => state.events.selectedEvent.eventId,
   );
   const isDetailsVisible: ISelectedEvent["isDetailsVisible"] = useSelector(
-    (state: RootState) => state.events.selectedEvent.isDetailsVisible
+    (state: RootState) => state.events.selectedEvent.isDetailsVisible,
   );
   const bigCardRow: ISelectedEvent["cardDetailsPosition"] = useSelector(
-    (state: RootState) => state.events.selectedEvent.cardDetailsPosition
+    (state: RootState) => state.events.selectedEvent.cardDetailsPosition,
   );
 
   /**
@@ -61,8 +63,7 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({
     dispatch(setSelectedEventId(events[index].id));
 
     // define amount of column into grid
-    let numberOfColumns =
-      getComputedStyle(grid).gridTemplateColumns.split(" ").length;
+    const numberOfColumns = getComputedStyle(grid).gridTemplateColumns.split(" ").length;
     const chunk = events.slice(0, index + 1);
     const extraCardPosition = Math.ceil(chunk.length / numberOfColumns) + 1;
     dispatch(setCardDetailsPosition(extraCardPosition));
@@ -91,10 +92,7 @@ export const EventsLibrary: React.FC<IEventsLibrary> = ({
     >
       {isLoading && <Notification boldText="Loading ..." />}
       {isError && (
-        <Notification
-          boldText="We have some problem..."
-          text=" please reload a page."
-        />
+        <Notification boldText="We have some problem..." text=" please reload a page." />
       )}
       {events.length === 0 && (
         <Notification
