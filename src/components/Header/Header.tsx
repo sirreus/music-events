@@ -85,6 +85,11 @@ export const Header: React.FC = () => {
     }
   };
 
+  const cleanUpSearchInput = () => {
+    dispatch(setSearchValue(""));
+    dispatch(setSearchResults(eventsData));
+  };
+
   return (
     <header>
       <div className="top-wrapper">
@@ -92,12 +97,18 @@ export const Header: React.FC = () => {
         <form className="search-form">
           <i className="search-icon" />
           <input
-            className="search-input"
+            className={searchValue ? "search-input filled" : "search-input"}
             type="text"
             placeholder="Search for events..."
             onChange={(e) => searchItem(e.target.value)}
             value={searchValue}
           />
+          {searchValue && (
+            <div
+              className="cleanup-button"
+              onClick={() => cleanUpSearchInput()}
+            />
+          )}
         </form>
       </div>
       <NavBar genresFilters={genres} isMobile={isMobile} />
