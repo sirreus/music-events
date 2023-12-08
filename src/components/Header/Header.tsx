@@ -4,7 +4,10 @@ import Fuse from "fuse.js";
 
 import { RootState } from "../../store";
 import { IEvent } from "../../store/types";
-import { setDetailsVisible } from "../../store/events/slices";
+import {
+  setDetailsVisible,
+  removeSelectedEvent,
+} from "../../store/events/slices";
 import { setSearchResults, setSearchValue } from "../../store/search/slices";
 import { IFilter } from "../../store/filters/types";
 
@@ -88,6 +91,7 @@ export const Header: React.FC = () => {
   const cleanUpSearchInput = () => {
     dispatch(setSearchValue(""));
     dispatch(setSearchResults(eventsData));
+    if (isEventDetailsVisible) dispatch(removeSelectedEvent());
   };
 
   return (
